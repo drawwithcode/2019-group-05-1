@@ -29,7 +29,7 @@ class Crack {
     return this.id;
   }
   mouseHover() {
-    if (mouseX > this.x && mouseX < this.x + crackWidth && mouseY > this.y && mouseY < this.y + crackHeight && this.color == allPlayers[0].getColor()) {
+    if (mouseX > this.x && mouseX < this.x + crackWidth && mouseY > this.y && mouseY < this.y + crackHeight && this.color == players[0].getColor()) {
       return true;
     } else {
       return false;
