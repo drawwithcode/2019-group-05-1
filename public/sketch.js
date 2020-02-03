@@ -2,7 +2,7 @@ var socket;
 
 let localPlayerId;
 let localPlayer;
-let players = [];
+let allPlayers = [];
 let myMirrorPlayer = [];
 let playerNumber = 0;
 let totalPlayers = 0;
@@ -18,6 +18,13 @@ let crackLifetime = 400; //in seconds
 let colorOption = [];
 let crackColorOption = [];
 let patchColorOption = [];
+
+//const socket = io.connect('http://localhost');
+
+let players = [];
+
+
+
 
 function preload() {
   // put preload code here
@@ -36,22 +43,25 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
 
   socket = io();
-  socket = io.connect('https://marinence.herokuapp.com');
+  socket = io.connect('https://marinence.herokuapp.com/');
 
   socket.on("heartbeat", players => updatePlayers(players));
   socket.on("disconnect", playerId => removePlayer(playerId));
   socket.on('crackBroadcast', mirrorCreateCrack);
   socket.on('deleteBroadcast', mirrorDeleteCrack);
-  socket.on('receivePosition', updatePlayers);
+  socket.on('receivePosition', updatePlayer);
 
   createPlayer();
   for (i = 0; i < maxCracks; i++) {
     createCrack();
   }
+
 }
 function draw() {
   // put drawing code here
   background(2, 24, 89);
+
+
 
   for (i = 0; i < myCrack.length; i++) {
     if (myCrack[i].getFixed()) {
@@ -61,10 +71,10 @@ function draw() {
     myCrack[i].update();
   }
 
-  for (i = 0; i < players.length; i++) {
-    if (players[i].getId() == localPlayerId) {
-      players[i].setPosition(mouseX, mouseY);
-      players[i].display();
+  for (i = 0; i < allPlayers.length; i++) {
+    if (allPlayers[i].getId() == localPlayerId) {
+      allPlayers[i].setPosition(mouseX, mouseY);
+      allPlayers[i].display();
       var localPlayer = {
         id: localPlayerId,
         xPos: mouseX,
@@ -73,6 +83,8 @@ function draw() {
       socket.emit("sendPosition", localPlayer);
     }
   }
+
+players.forEach(player => player.display());
 }
 
 function generateId() {
@@ -87,7 +99,10 @@ function createPlayer() {
   let playerColor = random(colorOption);
   let playerId = generateId();
   localPlayerId = playerId;
-  players.push(new Player(playerId, mouseX, mouseY, playerColor));
+  allPlayers.push(new Player(playerId, mouseX, mouseY, playerColor));
+}
+function updatePlayer(localPlayer) {
+  console.log("The Update Does Not Work")
 }
 
 function createCrack() {
@@ -135,7 +150,7 @@ function mouseReleased() {
   for (i = 0; i < myCrack.length; i++) {
     if (myCrack[i].mouseHover()) {
       myCrack[i].setFixed();
-      players[0].setColor();
+      allPlayers[0].setColor();
     }
   }
 }
