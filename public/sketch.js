@@ -43,7 +43,7 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
 
   socket = io();
-  socket = io.connect('http://localhost:3000');
+  socket = io.connect('https://marinence.herokuapp.com/');
 
   socket.on("heartbeat", players => updatePlayers(players));
   socket.on("disconnect", playerId => removePlayer(playerId));
@@ -83,7 +83,7 @@ function draw() {
       socket.emit("sendPosition", localPlayer);
     }
   }
-  
+
 players.forEach(player => player.display());
 }
 
