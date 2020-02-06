@@ -38,7 +38,7 @@ function setup() {
   createCanvas(windowWidth, (windowHeight - 10));
 
   socket = io();
-  socket = io.connect('http://localhost:3000');
+  socket = io.connect('https://marinence.herokuapp.com/');
 
   socket.on('crackBroadcast', mirrorCreateCrack);
   socket.on('deleteBroadcast', mirrorDeleteCrack);
@@ -165,7 +165,7 @@ function mouseReleased() {
 }
 
 function updateSelfScore() {
-    yourScore+=1;  
+    yourScore+=1;
     socket.emit("increaseScore");
   printScore();
 }
