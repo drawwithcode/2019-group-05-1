@@ -22,6 +22,9 @@ class Player {
     this.color = random(colorOption)
     this.image = patchColorOption[this.color];
   }
+  setImage(){
+    this.image = patchColorOption[this.color];
+  }
   getId() {
     return this.id;
   }

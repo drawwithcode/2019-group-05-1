@@ -1,12 +1,11 @@
 var socket;
-
 let localPlayerId;
 let localPlayer;
-let players = [];
+let allPlayers = [];
 let myMirrorPlayer = [];
 let playerNumber = 0;
 let totalPlayers = 0;
-
+let firstPlayerId;
 let crackId = 0;
 let myCrack = [];
 let myCrackMirrored = [];
@@ -18,6 +17,9 @@ let crackLifetime = 400; //in seconds
 let colorOption = [];
 let crackColorOption = [];
 let patchColorOption = [];
+
+let yourScore = 0;
+let TotalScore = 0;
 
 function preload() {
   // put preload code here
@@ -33,16 +35,18 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth, (windowHeight - 10));
 
   socket = io();
-  socket = io.connect('https://marinence.herokuapp.com/');
+  socket = io.connect('http://localhost:3000');
 
-  socket.on("heartbeat", players => updatePlayers(players));
-  socket.on("disconnect", playerId => removePlayer(playerId));
   socket.on('crackBroadcast', mirrorCreateCrack);
   socket.on('deleteBroadcast', mirrorDeleteCrack);
-  socket.on('receivePosition', updatePlayers);
+  socket.on('receivePosition', updatePlayer);
+  socket.on('updateTotal', function updateTotalScore(val){
+    TotalScore=val;
+    printScore();
+  });
 
   createPlayer();
   for (i = 0; i < maxCracks; i++) {
@@ -61,16 +65,16 @@ function draw() {
     myCrack[i].update();
   }
 
-  for (i = 0; i < players.length; i++) {
-    if (players[i].getId() == localPlayerId) {
-      players[i].setPosition(mouseX, mouseY);
-      players[i].display();
-      var localPlayer = {
-        id: localPlayerId,
-        xPos: mouseX,
-        yPos: mouseY
-      }
-      socket.emit("sendPosition", localPlayer);
+  for (i = 0; i < allPlayers.length; i++) {
+    if (allPlayers[i].getId() == localPlayerId) {
+      allPlayers[i].setPosition(mouseX, mouseY);
+      allPlayers[i].display();
+      let p = { id: allPlayers[i].getId(), x: allPlayers[i].x, y: allPlayers[i].y, color: allPlayers[i].color };
+      socket.emit("sendPosition", p);
+    }
+    else {
+      allPlayers[i].setPosition(allPlayers[i].x, allPlayers[i].y);
+      allPlayers[i].display();
     }
   }
 }
@@ -79,15 +83,33 @@ function generateId() {
   let mil = millis();
   let sec = second();
   let min = minute();
-  let timestamp = str([mil, sec, min]);
-  return timestamp;
+  let timestamp = [mil, sec, min];
+  return timestamp.join('-');
 }
 
 function createPlayer() {
   let playerColor = random(colorOption);
   let playerId = generateId();
   localPlayerId = playerId;
-  players.push(new Player(playerId, mouseX, mouseY, playerColor));
+  var player = new Player(playerId, mouseX, mouseY, playerColor);
+  console.log(player);
+  allPlayers.push(player);
+}
+function updatePlayer(newPlayer) {
+
+
+  var p = allPlayers.find(x => x.id === newPlayer.id);
+  if (p) {
+    p.x = newPlayer.x;
+    p.y = newPlayer.y;
+    p.color = newPlayer.color;
+    p.setImage();
+  }
+  else {
+    var player = new Player(newPlayer.id, newPlayer.x, newPlayer.y, newPlayer.color);
+    allPlayers.push(player);
+  }
+
 }
 
 function createCrack() {
@@ -112,6 +134,7 @@ function createCrack() {
 
 function mirrorCreateCrack(crackData) {
   myCrack.push(new Crack(crackData.myId, crackData.cX, crackData.cY, crackData.cL, crackData.cC));
+
 }
 
 function deleteCrack(i) {
@@ -135,29 +158,19 @@ function mouseReleased() {
   for (i = 0; i < myCrack.length; i++) {
     if (myCrack[i].mouseHover()) {
       myCrack[i].setFixed();
-      players[0].setColor();
+      allPlayers[0].setColor();
+      updateSelfScore();
     }
   }
 }
 
-function updatePlayers(serverPlayers) {
-  for (let i = 0; i < serverPlayers.length; i++) {
-    let playerFromServer = serverPlayers[i];
-    if (!playerExists(playerFromServer)) {
-      players.push(new Player(playerFromServer));
-    }
-  }
+function updateSelfScore() {
+    yourScore+=1;  
+    socket.emit("increaseScore");
+  printScore();
 }
 
-function playerExists(playerFromServer) {
-  for (let i = 0; i < players.length; i++) {
-    if (players[i].id === playerFromServer) {
-      return true;
-    }
-  }
-  return false;
-}
-
-function removePlayer(playerId) {
-  players = players.filter(player => player.id !== playerId);
+function printScore() {
+  document.getElementById("score").innerText = yourScore;
+  document.getElementById("totalscore").innerText = TotalScore;
 }
