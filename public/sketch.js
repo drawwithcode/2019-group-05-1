@@ -193,17 +193,14 @@ function allIntersect(crack) {
       playersIntersect++;
     }
 
-    if (playersIntersect == players.length) {
-      console.log("Intersect: " + playersIntersect + " of "
-        players.length);
-      return true;
-    } else {
-      console.log("Intersect: " + playersIntersect + " of "
-        players.length);
-      return false;
-    }
 
-  }
+
+}
+if (playersIntersect == players.length) {
+  return true;
+} else {
+  return false;
+}
 }
 
 function Bubble() {
