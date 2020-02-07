@@ -91,8 +91,7 @@ function draw() {
   for (let i = 0; i < players.length; i++) {
     players[i].draw();
   }
-  fill("#ffffff");
-  text("Score: " + points, windowWidth - 150, windowHeight - 50);
+
   for (let i = 0; i < cracks.length; i++) {
     cracks[i].draw();
     if (cracks[i].getRainbow()) {
@@ -100,6 +99,8 @@ function draw() {
 
     }
   }
+  fill("#ffffff");
+  text("Score: " + points, windowWidth - 150, windowHeight - 50);
 }
 
 function setGradient(c1, c2) {
