@@ -1,13 +1,13 @@
 {
-  "name": "boing",
+  "name": "Marinence",
   "version": "1.0.0",
-  "description": "fun game this",
+  "description": "creative coding group project",
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "lg",
+  "author": "Bianca Dias Cheung, Cecilia Gaetarelli, Xushan Li",
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.3",
