@@ -20,7 +20,6 @@ class Crack {
   draw() {
     fill(this.color);
     noStroke();
-    rotate(45);
     beginShape();
     vertex(this.x + this.width - 5, this.y + this.height - 90);
     vertex(this.x + this.width - 30, this.y + this.height - 50);
