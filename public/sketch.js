@@ -127,22 +127,17 @@ function mouseReleased() {
 
 function allIntersect(crack) {
   let playersIntersect = 0;
-  for (let i = 0; i < players.length; i++) {
-    if (players[i].x > crack.x && players[i].x < crack.x + crack.width && players[i].y > crack.y && players[i].y < crack.y + crack.height) {
-      console.log(players[i]);
-      console.log(players.length);
+  for (let k = 0; k < players.length; k++) {
+    if (players[k].x > crack.x && players[k].x < crack.x + crack.width && players[k].y > crack.y && players[k].y < crack.y + crack.height) {
+      console.log(players[k]);
           playersIntersect++;
         }
 
   if (playersIntersect == players.length) {
-
-    console.log(playersIntersect);
-    console.log(players.length);
+    console.log("Intersect: " + playersIntersect + " of "players.length);
     return true;
   } else {
-
-    console.log(playersIntersect);
-    console.log(players.length);
+    console.log("Intersect: " + playersIntersect + " of "players.length);
     return false;
   }
 
