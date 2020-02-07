@@ -111,7 +111,7 @@ function mouseReleased() {
           let xPos = cracks[j].x;
           let yPos = cracks[j].y;
         if (cracks[j].getRainbow()){
-          if (allIntersect(xPos, yPos)){
+          if (allIntersect(cracks[j])){
             socket.emit("clickCrack", xPos, yPos);
             socket.emit("changePlayerColor", localPlayer);
           }
@@ -125,22 +125,23 @@ function mouseReleased() {
   }
 }
 
-function allIntersect(xPos, yPos) {
+function allIntersect(crack) {
   let playersIntersect = 0;
   for (let i = 0; i < players.length; i++) {
-    if (xPos > players[i].x && xPos < players[i].x + players[i].radius && yPos > players[i].y && yPos < players[i].y + players[i].radius) {
+    if (players[i].x > crack.x && players[i].x < crack.x + crack.width && players[i].y > crack.y && players[i].y < crack.y + crack.height) {
           playersIntersect++;
         }
-        console.log(playersIntersect);
-        console.log(players.length);
+
   if (playersIntersect == players.length) {
+
+    console.log(playersIntersect);
+    console.log(players.length);
     return true;
-    console.log(playersIntersect);
-    console.log(players.length);
   } else {
-    return false;
+
     console.log(playersIntersect);
     console.log(players.length);
+    return false;
   }
 
 }
