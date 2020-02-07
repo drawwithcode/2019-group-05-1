@@ -1,48 +1,125 @@
-// load express library
-var express = require('express');
-//total score for this session
-let score=0;
-// create the app
-var app = express();
-// define the port where client files will be provided
-var port = process.env.PORT || 3000;
-// start to listen to that port
-var server = app.listen(port);
-// provide static access to the files
-// in the "public" folder
-app.use(express.static('public'));
-// load socket library
-var socket = require('socket.io');
-// create a socket connection
-var io = socket(server);
-// define which function should be called
-// when a new connection is opened from client
-io.on('connection', newConnection);
-// callback function: the paramenter (in this case socket)
-// will contain all the information on the new connection
+const express = require("express");
+const socket = require('socket.io');
+
+
+let Player = require("./Player");
+let Crack = require("./Crack");
+
+
+const app = express();
+let server = app.listen(80);
+app.use(express.static("public"));
+let io = socket(server);
+
+
+let highschore = 0;   //total score
+let gameSpeed = 500;  //changes the cracks every 0.5 seconds
+let maxCracks = 10;   //number of cracks shown at the same time
+var colorArray = [    //list of possible color
+  "#FF6633",
+  "#FFB399",
+  "#FF33FF",
+  "#FFFF99",
+  "#00B3E6",
+  "#E6B333"];
+let cracks = [];
+let players = [];
+
+
+setInterval(updateGame, 16);
+setInterval(updateCracks, gameSpeed);
+
+
+io.on("connect", newConnection);
+
 function newConnection(socket) {
-  //when a new connection is created, print its id
- // console.log('socket:', socket.id);
-  //define what to do on different kind of messages
-  socket.on('newCrack', newCrack);
-  socket.on('deleteCrack', eraseCrack);
-  socket.on('sendPosition', sendPosition);
-  socket.on('increaseScore', updateTotalScore);
 
-	//reaction on messages
-  function newCrack(crackData) {
-    socket.broadcast.emit('crackBroadcast', crackData);
-  }
-  function eraseCrack(deleteId) {
-    socket.broadcast.emit('deleteBroadcast', deleteId);
-  }
-  function sendPosition(localPlayer) {
-    socket.broadcast.emit('receivePosition', localPlayer);
-  }
-  function updateTotalScore(){
-    score+=1;
-    io.emit('updateTotal', score);
 
+  socket.on("disconnect", deleteConnection);
+  socket.on("mousePosition", updatePosition);
+  socket.on("clickCrack", removeCrack);
+  socket.on("changePlayerColor", changePlayerColor);
+
+
+  io.sockets.emit("setColorOptions", colorArray);
+  players.push(new Player(socket.id, getRandomColor()));
+  console.log("Player ID: " + socket.id + " has joined the game.");
+
+
+  function deleteConnection() {
+    console.log("Player ID: " + socket.id + " has left the game.");
+    io.sockets.emit("deleteConnection", socket.id);
+    remainingPlayers = [];
+    for (let i = 0; i < players.length; i++) {
+      if (players[i].getId() != socket.id) {
+        remainingPlayers.push(players[i]);
+      }
+    }
+    players = remainingPlayers;
+  }
+
+
+  function updatePosition(mouseData) {
+    for (let i = 0; i < players.length; i++) {
+      if (players[i].getId() == socket.id) {
+        players[i].setPosition(mouseData.xPos, mouseData.yPos);
+      }
+    }
   }
 }
-console.log('node server is running on port')
+
+
+console.log("\x1b[36m\x1b[34m%s\x1b[0m", "Game Starts. Interval: " + gameSpeed + " milliseconds. Maximum cracks: " + maxCracks + ".");
+
+
+function getRandomColor() {
+  let randomColor = colorArray[Math.floor(Math.random() * colorArray.length)];
+  return randomColor;
+}
+
+
+function changePlayerColor(localPlayer) {
+  for (let i = 0; i < players.length; i++) {
+    if (players[i].getId() == localPlayer) {
+      players[i].setColor(getRandomColor());
+    }
+  }
+}
+
+
+function createCrack() {
+  cracks.push(new Crack(getRandomColor(), Math.random() >= 0.9)); //10% chance of rainbow
+}
+
+
+function removeCrack(xPos, yPos) {
+  highschore++;
+  console.log("Current Score: " + highschore)
+  for (let i = 0; i < cracks.length; i++) {
+    if (cracks[i].x == xPos && cracks[i].y == yPos) {
+      let deleteX = cracks[i].x;
+      let deleteY = cracks[i].y;
+      cracks.splice(i, 1);
+      io.sockets.emit("removeCrack", deleteX, deleteY);
+    }
+  }
+}
+
+
+function updateCracks() {
+  createCrack();
+  if (cracks.length > maxCracks) {
+    var crackToRemove = {
+      xPos: cracks[0].x,
+      yPos: cracks[0].y
+    };
+    cracks.splice(0, 1);
+    io.sockets.emit("removeCrack", crackToRemove.xPos, crackToRemove.yPos);
+  }
+}
+
+
+function updateGame() {
+  io.sockets.emit("intervalUpdatePlayer", players);
+  io.sockets.emit("intervalUpdateCrack", cracks);
+}

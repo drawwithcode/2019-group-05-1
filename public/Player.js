@@ -1,31 +1,32 @@
 class Player {
-  constructor(id, xPos, yPos, color) {
-    this.x = xPos;
-    this.y = yPos;
-    this.color = color;
-    this.image = patchColorOption[this.color];
-    this.id = id;
+  constructor(player) {
+    this.x = player.x;
+    this.y = player.y;
+    this.id = player.id;
+    this.color = player.color;
   }
-  display() {
-    image(this.image, this.x, this.y);
+
+
+  draw() {
+    fill(this.color);
+    circle(this.x, this.y, 20);
   }
-  update() {
+
+
+  update(player) {
+    this.x = player.x;
+    this.y = player.y;
+    this.color = player.color;
   }
-  setPosition(xPos, yPos) {
-    this.x = xPos;
-    this.y = yPos;
-  }
-  getColor() {
-    return this.color;
-  }
-  setColor() {
-    this.color = random(colorOption)
-    this.image = patchColorOption[this.color];
-  }
-  setImage(){
-    this.image = patchColorOption[this.color];
-  }
+
+
   getId() {
     return this.id;
   }
+
+
+  getColor() {
+    return this.color;
+  }
+
 }
