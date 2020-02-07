@@ -13,8 +13,8 @@ app.use(express.static("public"));
 let io = socket(server);
 
 
-let highschore = 0;   //total score
-let gameSpeed = 200;  //changes the cracks every 0.5 seconds
+let highscore = 0;   //total score
+let gameSpeed = 500;  //changes the cracks every 0.5 seconds
 let maxCracks = 20;   //number of cracks shown at the same time
 var colorArray = [    //list of possible color
   "#EC585D",
@@ -39,7 +39,6 @@ function newConnection(socket) {
   socket.on("disconnect", deleteConnection);
   socket.on("mousePosition", updatePosition);
   socket.on("clickCrack", removeCrack);
-  // socket.on("clickRainbowCrack", removeRainbowCrack);
   socket.on("changePlayerColor", changePlayerColor);
 
 
@@ -90,14 +89,17 @@ function changePlayerColor(localPlayer) {
 
 
 function createCrack() {
-  // cracks.push(new Crack(getRandomColor(), Math.random() >= 0.9)); //10% chance of rainbow
-  cracks.push(new Crack(getRandomColor(), true)); //10% chance of rainbow
+  cracks.push(new Crack(getRandomColor(), Math.random() >= 0.9)); //10% chance of rainbow
 }
 
 
-function removeCrack(xPos, yPos) {
-  highschore++;
-  console.log("Current Score: " + highschore)
+function removeCrack(xPos, yPos, rainbow) {
+  if (rainbow) {
+    highscore = highscore + 5;
+  } else {
+  highscore++;
+}
+  console.log("Current Score: " + highscore)
   for (let i = 0; i < cracks.length; i++) {
     if (cracks[i].x == xPos && cracks[i].y == yPos) {
       let deleteX = cracks[i].x;
@@ -108,30 +110,8 @@ function removeCrack(xPos, yPos) {
   }
 }
 
-// function removeRainbowCrack(xPos, yPos) {
-//   console.log("remove RC");
-//   let playersIntersect = 0;
-//   for (let h = 0; h < players.length; i++) {
-//
-//     if (xPos > players[h].x && xPos < players[h].x + players[h].radius && yPos > players[h].y && yPos < players[h].y + players[h].radius) {
-//       playersIntersect++;
-//     }
-//     if (playersIntersect == players.length) {
-//   highschore = highscore + 5;
-//   console.log("Current Score: " + highschore)
-//   for (let i = 0; i < cracks.length; i++) {
-//     if (cracks[i].x == xPos && cracks[i].y == yPos) {
-//       let deleteX = cracks[i].x;
-//       let deleteY = cracks[i].y;
-//       cracks.splice(i, 1);
-//       io.sockets.emit("removeCrack", deleteX, deleteY);
-//     }
-//     }
-//   }
-//   console.log("Array Length: "+ players.length);
-//   console.log("Var Length: "+ playersIntersect);
-// }
-// }
+
+
 
 
 function updateCracks() {
@@ -150,5 +130,5 @@ function updateCracks() {
 function updateGame() {
   io.sockets.emit("intervalUpdatePlayer", players);
   io.sockets.emit("intervalUpdateCrack", cracks);
-  io.sockets.emit("intervalUpdateScore", highschore);
+  io.sockets.emit("intervalUpdateScore", highscore);
 }
