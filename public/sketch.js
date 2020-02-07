@@ -115,8 +115,6 @@ function mouseReleased() {
             socket.emit("clickCrack", xPos, yPos);
             socket.emit("changePlayerColor", localPlayer);
           }
-          socket.emit("clickRainbowCrack", xPos, yPos);
-          console.log("rainbow was clicked at pos: " + xPos, yPos);
         } else if (cracks[j].getColor() == players[i].getColor()) {
             socket.emit("clickCrack", xPos, yPos);
             socket.emit("changePlayerColor", localPlayer);
@@ -133,13 +131,18 @@ function allIntersect(xPos, yPos) {
     if (xPos > players[i].x && xPos < players[i].x + players[i].radius && yPos > players[i].y && yPos < players[i].y + players[i].radius) {
           playersIntersect++;
         }
+        console.log(playersIntersect);
+        console.log(players.length);
   if (playersIntersect == players.length) {
     return true;
+    console.log(playersIntersect);
+    console.log(players.length);
   } else {
     return false;
+    console.log(playersIntersect);
+    console.log(players.length);
   }
-  console.log(playersIntersect);
-  console.log(players.length);
+
 }
 }
 
