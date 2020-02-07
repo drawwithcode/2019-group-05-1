@@ -16,11 +16,15 @@ socket.on("removeCrack", removeCrack);
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  textFont("Passion One");
+  textSize(20);
 }
 
 
 function draw() {
   background(220);
+
+  fill("black");
   text("Score: "+ points, windowWidth/2, windowHeight/2);
   for (let i = 0; i < cracks.length; i++) {
     cracks[i].draw();
