@@ -137,10 +137,10 @@ function allIntersect(crack) {
 
 }
 if (playersIntersect == players.length) {
-  console.log("Intersect: " + playersIntersect + " of "players.length);
+  // console.log("Intersect: " + playersIntersect + " of "players.length);
   return true;
 } else {
-  console.log("Intersect: " + playersIntersect + " of "players.length);
+  // console.log("Intersect: " + playersIntersect + " of "players.length);
   return false;
 }
 }
