@@ -114,7 +114,7 @@ function setGradient(c1, c2) {
 }
 
 function fishs(_img, _imgRev, _x, _dir, _duration, _yAmplit) {
-  imageMode(CENTER);
+
   var y, r = random(0, 2); //random starting point
   var deltax, x, px = 0;
   this.move = function() {
@@ -171,12 +171,12 @@ function mouseReleased() {
         if (cracks[j].clicked()) {
           let xPos = cracks[j].x;
           let yPos = cracks[j].y;
-        if (cracks[j].getRainbow()){
-          if (allIntersect(cracks[j])){
-            socket.emit("clickCrack", xPos, yPos, true);
-            socket.emit("changePlayerColor", localPlayer);
-          }
-        } else if (cracks[j].getColor() == players[i].getColor()) {
+          if (cracks[j].getRainbow()) {
+            if (allIntersect(cracks[j])) {
+              socket.emit("clickCrack", xPos, yPos, true);
+              socket.emit("changePlayerColor", localPlayer);
+            }
+          } else if (cracks[j].getColor() == players[i].getColor()) {
             socket.emit("clickCrack", xPos, yPos, false);
             socket.emit("changePlayerColor", localPlayer);
           }
@@ -190,17 +190,16 @@ function allIntersect(crack) {
   let playersIntersect = 0;
   for (let k = 0; k < players.length; k++) {
     if (players[k].x > crack.x && players[k].x < crack.x + crack.width && players[k].y > crack.y && players[k].y < crack.y + crack.height) {
-          playersIntersect++;
-        }
+      playersIntersect++;
+    }
 
 
-
-}
-if (playersIntersect == players.length) {
-  return true;
-} else {
-  return false;
-}
+  }
+  if (playersIntersect == players.length) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 function Bubble() {
