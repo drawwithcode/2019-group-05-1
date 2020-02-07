@@ -2,8 +2,8 @@ class Crack {
   constructor(color, rainbow) {
     this.rainbow = rainbow;
     this.color = color;
-    this.x = Math.random() * 400 + 40;
-    this.y = Math.random() * 400 + 40;
+    this.x = Math.random() * 2000 + 40;
+    this.y = Math.random() * 2000 + 40;
   }
 
 
