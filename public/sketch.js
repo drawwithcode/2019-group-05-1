@@ -129,6 +129,8 @@ function allIntersect(crack) {
   let playersIntersect = 0;
   for (let i = 0; i < players.length; i++) {
     if (players[i].x > crack.x && players[i].x < crack.x + crack.width && players[i].y > crack.y && players[i].y < crack.y + crack.height) {
+      console.log(players[i]);
+      console.log(players.length);
           playersIntersect++;
         }
 
