@@ -105,17 +105,19 @@ function mouseMoved() {
 function mouseReleased() {
   for (let i = 0; i < players.length; i++) {
     if (players[i].getId() == socket.id) {
+      let localPlayer = socket.id
       for (let j = 0; j < cracks.length; j++) {
         if (cracks[j].clicked()) {
-        if (cracks[j].getRainbow()){
           let xPos = cracks[j].x;
           let yPos = cracks[j].y;
+        if (cracks[j].getRainbow()){
+          if (allIntersect(xPos, yPos)){
+            socket.emit("clickCrack", xPos, yPos);
+            socket.emit("changePlayerColor", localPlayer);
+          }
           socket.emit("clickRainbowCrack", xPos, yPos);
           console.log("rainbow was clicked at pos: " + xPos, yPos);
         } else if (cracks[j].getColor() == players[i].getColor()) {
-            let xPos = cracks[j].x;
-            let yPos = cracks[j].y;
-            let localPlayer = socket.id
             socket.emit("clickCrack", xPos, yPos);
             socket.emit("changePlayerColor", localPlayer);
           }
@@ -123,6 +125,22 @@ function mouseReleased() {
       }
     }
   }
+}
+
+function allIntersect(xPos, yPos) {
+  let playersIntersect = 0;
+  for (let i = 0; i < players.length; i++) {
+    if (xPos > players[i].x && xPos < players[i].x + players[i].radius && yPos > players[i].y && yPos < players[i].y + players[i].radius) {
+          playersIntersect++;
+        }
+  if (playersIntersect == players.length) {
+    return true;
+  } else {
+    return false;
+  }
+  console.log(playersIntersect);
+  console.log(players.length);
+}
 }
 
 function Bubble() {

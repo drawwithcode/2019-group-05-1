@@ -39,7 +39,7 @@ function newConnection(socket) {
   socket.on("disconnect", deleteConnection);
   socket.on("mousePosition", updatePosition);
   socket.on("clickCrack", removeCrack);
-  socket.on("clickRainbowCrack", removeRainbowCrack);
+  // socket.on("clickRainbowCrack", removeRainbowCrack);
   socket.on("changePlayerColor", changePlayerColor);
 
 
@@ -108,30 +108,30 @@ function removeCrack(xPos, yPos) {
   }
 }
 
-function removeRainbowCrack(xPos, yPos) {
-  console.log("remove RC");
-  let playersIntersect = 0;
-  for (let h = 0; h < players.length; i++) {
-
-    if (xPos > players[h].x && xPos < players[h].x + players[h].radius && yPos > players[h].y && yPos < players[h].y + players[h].radius) {
-      playersIntersect++;
-    }
-    if (playersIntersect == players.length) {
-  highschore = highscore + 5;
-  console.log("Current Score: " + highschore)
-  for (let i = 0; i < cracks.length; i++) {
-    if (cracks[i].x == xPos && cracks[i].y == yPos) {
-      let deleteX = cracks[i].x;
-      let deleteY = cracks[i].y;
-      cracks.splice(i, 1);
-      io.sockets.emit("removeCrack", deleteX, deleteY);
-    }
-    }
-  }
-  console.log("Array Length: "+ players.length);
-  console.log("Var Length: "+ playersIntersect);
-}
-}
+// function removeRainbowCrack(xPos, yPos) {
+//   console.log("remove RC");
+//   let playersIntersect = 0;
+//   for (let h = 0; h < players.length; i++) {
+//
+//     if (xPos > players[h].x && xPos < players[h].x + players[h].radius && yPos > players[h].y && yPos < players[h].y + players[h].radius) {
+//       playersIntersect++;
+//     }
+//     if (playersIntersect == players.length) {
+//   highschore = highscore + 5;
+//   console.log("Current Score: " + highschore)
+//   for (let i = 0; i < cracks.length; i++) {
+//     if (cracks[i].x == xPos && cracks[i].y == yPos) {
+//       let deleteX = cracks[i].x;
+//       let deleteY = cracks[i].y;
+//       cracks.splice(i, 1);
+//       io.sockets.emit("removeCrack", deleteX, deleteY);
+//     }
+//     }
+//   }
+//   console.log("Array Length: "+ players.length);
+//   console.log("Var Length: "+ playersIntersect);
+// }
+// }
 
 
 function updateCracks() {
