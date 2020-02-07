@@ -57,7 +57,7 @@ function mouseReleased() {
       for (let j = 0; j < cracks.length; j++) {
         if (cracks[j].getRainbow()){
           for (let k=0; k <players.length; k++){
-            if (intersect(players[k].x,players[k].y)){
+            if (players[k].intersect(players[k].x, players[k].y)){
               console.log('oi tim');
             }
           }
