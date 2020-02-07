@@ -123,4 +123,5 @@ function updateCracks() {
 function updateGame() {
   io.sockets.emit("intervalUpdatePlayer", players);
   io.sockets.emit("intervalUpdateCrack", cracks);
+  io.sockets.emit("intervalUpdateScore", highschore);
 }

@@ -3,9 +3,10 @@ const socket = io.connect('https://marinence.herokuapp.com/');
 let cracks = [];
 let players = [];
 var colorArray = [];
+var points = 0;
 
 
-
+socket.on("intervalUpdateScore", updateScore);
 socket.on("setColorOptions", setColorOptions);
 socket.on("intervalUpdatePlayer", updatePlayers);
 socket.on("intervalUpdateCrack", updateCrack);
@@ -20,6 +21,7 @@ function setup() {
 
 function draw() {
   background(220);
+  text("Score: "+ points, windowWidth/2, windowHeight/2);
   for (let i = 0; i < cracks.length; i++) {
     cracks[i].draw();
     if (cracks[i].getRainbow()) {
@@ -29,6 +31,10 @@ function draw() {
   for (let i = 0; i < players.length; i++) {
     players[i].draw();
   }
+}
+
+function updateScore(score) {
+  points = score;
 }
 
 
