@@ -21,17 +21,17 @@ class Crack {
     fill(this.color);
     noStroke();
     beginShape();
-  vertex(this.x+this.width-5,this.y+this.height-90);
-  vertex(this.x+this.width-30,this.y+this.height-50);
-  vertex(this.x+this.width-20,this.y+this.height-50);
-  vertex(this.x+this.width-30,this.y+this.height-30);
-  vertex(this.x+this.width-20,this.y+this.height-30);
-  vertex(this.x+this.width-30,this.y+this.height);
-  vertex(this.x+this.width,this.y+this.height-40);
-  vertex(this.x+this.width-10,this.y+this.height-40);
-  vertex(this.x+this.width,this.y+this.height-60);
-  vertex(this.x+this.width-12,this.y+this.height-60);
-  endShape(CLOSE);
+    vertex(this.x + this.width - 5, this.y + this.height - 90);
+    vertex(this.x + this.width - 30, this.y + this.height - 50);
+    vertex(this.x + this.width - 20, this.y + this.height - 50);
+    vertex(this.x + this.width - 30, this.y + this.height - 30);
+    vertex(this.x + this.width - 20, this.y + this.height - 30);
+    vertex(this.x + this.width - 30, this.y + this.height);
+    vertex(this.x + this.width, this.y + this.height - 40);
+    vertex(this.x + this.width - 10, this.y + this.height - 40);
+    vertex(this.x + this.width, this.y + this.height - 60);
+    vertex(this.x + this.width - 12, this.y + this.height - 60);
+    endShape(CLOSE);
   }
 
 

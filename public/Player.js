@@ -2,6 +2,7 @@ class Player {
   constructor(player) {
     this.x = player.x;
     this.y = player.y;
+    this.radius = 10;
     this.id = player.id;
     this.color = player.color;
   }
@@ -9,7 +10,15 @@ class Player {
 
   draw() {
     fill(this.color);
-    circle(this.x, this.y, 20);
+    circle(this.x, this.y, this.radius*2);
+  }
+
+  intersect(playerX, playerY) {
+    if (playerX > this.x && playerX < this.x + this.radius && playerY > this.y && playerY < this.y + this.radius) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 

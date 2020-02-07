@@ -55,6 +55,13 @@ function mouseReleased() {
   for (let i = 0; i < players.length; i++) {
     if (players[i].getId() == socket.id) {
       for (let j = 0; j < cracks.length; j++) {
+        if (getRainbow()){
+          for (let k=0; k <players.length; k++){
+            if (intersect(players[k].x,players[k].y)){
+              console.log('oi tim');
+            }
+          }
+        }
         if (cracks[j].clicked()) {
           if (cracks[j].getColor() == players[i].getColor()) {
             let xPos = cracks[j].x;
