@@ -10,6 +10,7 @@ class Player {
 
   draw() {
     fill(this.color);
+    noCursor();
     circle(this.x, this.y, this.radius*2);
   }
 
