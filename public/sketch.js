@@ -55,15 +55,15 @@ function mouseReleased() {
   for (let i = 0; i < players.length; i++) {
     if (players[i].getId() == socket.id) {
       for (let j = 0; j < cracks.length; j++) {
-        if (cracks[j].getRainbow()){
-          for (let k=0; k <players.length; k++){
-            if (players[k].intersect(players[k].x, players[k].y)){
-              console.log('oi tim');
-            }
-          }
-        }
+
         if (cracks[j].clicked()) {
-          if (cracks[j].getColor() == players[i].getColor()) {
+          if (cracks[j].getRainbow()){
+            for (let k=0; k <players.length; k++){
+              if (players[i].intersect(players[k].x, players[k].y)){
+                console.log('oi tim');
+              }
+            }
+          } else if (cracks[j].getColor() == players[i].getColor()) {
             let xPos = cracks[j].x;
             let yPos = cracks[j].y;
             let localPlayer = socket.id
