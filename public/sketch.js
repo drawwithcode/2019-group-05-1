@@ -4,6 +4,7 @@ let cracks = [];
 let players = [];
 var colorArray = [];
 var points = 0;
+var c1,c2;
 
 
 socket.on("intervalUpdateScore", updateScore);
@@ -18,22 +19,35 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   textFont("Passion One");
   textSize(20);
+  c1 = color("#85d4f1");
+  c2 = color("#2181bc");
 }
 
 
 function draw() {
-  background(220);
+  setGradient(c1,c2);
 
-  fill("black");
+  fill("#ffffff");
   text("Score: "+ points, windowWidth/2, windowHeight/2);
   for (let i = 0; i < cracks.length; i++) {
     cracks[i].draw();
     if (cracks[i].getRainbow()) {
       cracks[i].setColor(getRandomColor());
+
     }
   }
   for (let i = 0; i < players.length; i++) {
     players[i].draw();
+  }
+}
+
+function setGradient(c1,c2){
+  noFill();
+  for (var y=0;y<height; y++){
+    var inter = map(y,0,height,0,1);
+    var c = lerpColor(c1,c2,inter);
+    stroke(c);
+    line(0,y,width,y);
   }
 }
 

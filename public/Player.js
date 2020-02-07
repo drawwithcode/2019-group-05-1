@@ -11,6 +11,8 @@ class Player {
   draw() {
     fill(this.color);
     noCursor();
+    strokeWeight(3);
+    stroke("#85d4f1");
     circle(this.x, this.y, this.radius*2);
   }
 
