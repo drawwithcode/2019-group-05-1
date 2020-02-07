@@ -7,6 +7,7 @@ let Crack = require("./Crack");
 
 
 const app = express();
+var port = process.env.PORT || 3000;
 let server = app.listen(80);
 app.use(express.static("public"));
 let io = socket(server);
