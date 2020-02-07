@@ -170,13 +170,13 @@ function mouseReleased() {
         if (cracks[j].clicked()) {
           let xPos = cracks[j].x;
           let yPos = cracks[j].y;
-          if (cracks[j].getRainbow()) {
-            if (allIntersect(cracks[j])) {
-              socket.emit("clickCrack", xPos, yPos);
-              socket.emit("changePlayerColor", localPlayer);
-            }
-          } else if (cracks[j].getColor() == players[i].getColor()) {
-            socket.emit("clickCrack", xPos, yPos);
+        if (cracks[j].getRainbow()){
+          if (allIntersect(cracks[j])){
+            socket.emit("clickCrack", xPos, yPos, true);
+            socket.emit("changePlayerColor", localPlayer);
+          }
+        } else if (cracks[j].getColor() == players[i].getColor()) {
+            socket.emit("clickCrack", xPos, yPos, false);
             socket.emit("changePlayerColor", localPlayer);
           }
         }
@@ -189,9 +189,8 @@ function allIntersect(crack) {
   let playersIntersect = 0;
   for (let k = 0; k < players.length; k++) {
     if (players[k].x > crack.x && players[k].x < crack.x + crack.width && players[k].y > crack.y && players[k].y < crack.y + crack.height) {
-      console.log(players[k]);
-      playersIntersect++;
-    }
+          playersIntersect++;
+        }
 
 
 
