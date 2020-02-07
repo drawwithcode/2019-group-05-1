@@ -17,12 +17,12 @@ let highschore = 0;   //total score
 let gameSpeed = 500;  //changes the cracks every 0.5 seconds
 let maxCracks = 40;   //number of cracks shown at the same time
 var colorArray = [    //list of possible color
-  "#FF6633",
-  "#FFB399",
-  "#FF33FF",
-  "#FFFF99",
-  "#00B3E6",
-  "#E6B333"];
+  "#EC585D",
+  "#F38E5F",
+  "#FEE756",
+  "#26A160",
+  "#485D9A",
+  "#8A6598"];
 let cracks = [];
 let players = [];
 
