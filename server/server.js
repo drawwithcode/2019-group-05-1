@@ -15,7 +15,7 @@ let io = socket(server);
 
 let highschore = 0;   //total score
 let gameSpeed = 500;  //changes the cracks every 0.5 seconds
-let maxCracks = 40;   //number of cracks shown at the same time
+let maxCracks = 20;   //number of cracks shown at the same time
 var colorArray = [    //list of possible color
   "#EC585D",
   "#F38E5F",
