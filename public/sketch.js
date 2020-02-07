@@ -5,7 +5,9 @@ let players = [];
 var colorArray = [];
 var points = 0;
 var c1,c2;
-
+var bubbles = [];
+var bgleft;
+var bgright;
 
 socket.on("intervalUpdateScore", updateScore);
 socket.on("setColorOptions", setColorOptions);
@@ -14,21 +16,46 @@ socket.on("intervalUpdateCrack", updateCrack);
 socket.on("deleteConnection", removePlayer);
 socket.on("removeCrack", removeCrack);
 
+function preload() {
+
+  bgleft = loadImage("./assets/coral_left.png");
+  bgright = loadImage("./assets/coral_right.png");
+
+}
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   textFont("Passion One");
-  textSize(20);
+  textSize(30);
   c1 = color("#85d4f1");
   c2 = color("#2181bc");
+
+  for (var t = 0; t < 200; t++) {
+  bubbles[t] = new Bubble();
+}
+
 }
 
 
 function draw() {
   setGradient(c1,c2);
 
+image(bgleft, 0.1, height*0.5, width/2, height/2);
+image(bgright, width/2, height/2, width/2, height/2);
+push();
+noStroke();
+fill(255, 70);
+rect(0,0,windowWidth,windowHeight);
+pop();
+
+
+  for (var t = 0; t < bubbles.length; t++) {
+    bubbles[t].move();
+    bubbles[t].display();
+  }
+
   fill("#ffffff");
-  text("Score: "+ points, windowWidth/2, windowHeight/2);
+  text("Score: "+ points, windowWidth-150, windowHeight-50);
   for (let i = 0; i < cracks.length; i++) {
     cracks[i].draw();
     if (cracks[i].getRainbow()) {
@@ -98,6 +125,33 @@ function mouseReleased() {
   }
 }
 
+function Bubble() {
+  this.x = random(0, windowWidth);
+  this.y = random(0, windowHeight);
+  this.size = 15 * random();
+  this.speed = 1;
+
+  var xIncrease = 0.2;
+  var yIncrease = -2;
+
+  //movement
+  this.move = function() {
+    this.x += xIncrease * random(-4, 4);
+    this.y += yIncrease * this.speed + random(-1, 1);
+
+    if (this.y < 0) {
+      this.y = windowHeight;
+    }
+  }
+
+  //appearence
+  this.display = function() {
+    fill('rgba(255,255,255, 0.4)')
+    noStroke();
+    ellipse(this.x, this.y, this.size)
+  }
+}
+
 
 function updateCrack(serverCracks) {
   for (let i = 0; i < serverCracks.length; i++) {
@@ -159,4 +213,8 @@ function removePlayer(playerId) {
     }
   }
   players = remainingPlayers;
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
