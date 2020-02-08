@@ -88,10 +88,6 @@ function draw() {
     bubbles[t].display();
   }
 
-  for (let i = 0; i < players.length; i++) {
-    players[i].draw();
-  }
-
   for (let i = 0; i < cracks.length; i++) {
     cracks[i].draw();
     if (cracks[i].getRainbow()) {
@@ -99,6 +95,11 @@ function draw() {
 
     }
   }
+
+    for (let i = 0; i < players.length; i++) {
+      players[i].draw();
+    }
+
   fill("#ffffff");
   text("Score: " + points, windowWidth - 150, windowHeight - 50);
 }
