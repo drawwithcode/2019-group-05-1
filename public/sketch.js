@@ -25,16 +25,16 @@ function preload() {
   bgleft = loadImage("./assets/coral_left.png");
   bgright = loadImage("./assets/coral_right.png");
 
-  fish = loadImage("./gif/fish1.gif");
-  fishRev = loadImage("./gif/fish1-rev.gif");
-  fish2 = loadImage("./gif/fish2.gif");
-  fish2Rev = loadImage("./gif/fish2-rev.gif");
-  fish3 = loadImage("./gif/manta.gif");
-  fish3Rev = loadImage("./gif/manta-rev.gif");
-  fish4 = loadImage("./gif/turtle.gif");
-  fish4Rev = loadImage("./gif/turtle-rev.gif");
-  fish5 = loadImage("./gif/vaquita.gif");
-  fish5Rev = loadImage("./gif/vaquita-rev.gif");
+  fish = createImage("./gif/fish1.gif");
+  fishRev = createImage("./gif/fish1-rev.gif");
+  fish2 = createImage("./gif/fish2.gif");
+  fish2Rev = createImage("./gif/fish2-rev.gif");
+  fish3 = createImage("./gif/manta.gif");
+  fish3Rev = createImage("./gif/manta-rev.gif");
+  fish4 = createImage("./gif/turtle.gif");
+  fish4Rev = createImage("./gif/turtle-rev.gif");
+  fish5 = createImage("./gif/vaquita.gif");
+  fish5Rev = createImage("./gif/vaquita-rev.gif");
 
 }
 
