@@ -39,7 +39,9 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  canvas = createCanvas(windowWidth, windowHeight);
+  canvas.position(0, 0);
+  canvas.style('z-index', '-1');
   frameRate(60);
 
   fisha = new fishs(fish, fishRev, 0, 1, 4, 40);
