@@ -50,7 +50,7 @@ function setup() {
 
   textFont("Passion One");
   textSize(30);
-  c1 = color("#85d4f1");
+  c1 = color("#85d4f1"); //gradient colors for the background
   c2 = color("#2181bc");
 
   for (var t = 0; t < 200; t++) {
@@ -87,19 +87,19 @@ function draw() {
     bubbles[t].move();
     bubbles[t].display();
   }
-
+//cracks generator
   for (let i = 0; i < cracks.length; i++) {
-    cracks[i].draw();
+        cracks[i].draw();
     if (cracks[i].getRainbow()) {
       cracks[i].setColor(getRandomColor());
 
     }
   }
-  
+//players
   for (let i = 0; i < players.length; i++) {
     players[i].draw();
   }
-
+//score
   fill("#ffffff");
   text("Score: " + points, windowWidth - 150, windowHeight - 50);
 }
@@ -154,7 +154,7 @@ function setColorOptions(colorOptions) {
   colorArray = colorOptions;
 }
 
-
+//display players
 function mouseMoved() {
   var mouseData = {
     xPos: mouseX,
@@ -186,7 +186,7 @@ function mouseReleased() {
     }
   }
 }
-
+//for the rainbow crack
 function allIntersect(crack) {
   let playersIntersect = 0;
   for (let k = 0; k < players.length; k++) {

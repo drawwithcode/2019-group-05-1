@@ -59,7 +59,7 @@ function newConnection(socket) {
     players = remainingPlayers;
   }
 
-
+//positions of the players
   function updatePosition(mouseData) {
     for (let i = 0; i < players.length; i++) {
       if (players[i].getId() == socket.id) {
