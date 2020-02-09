@@ -1,3 +1,4 @@
+![](ReadMe/logo.svg)
 <h1> Marinence </h1> 
 
 <h4> Bianca Dias Cheung, Cecilia Gaetarelli, Xushan Li </h4> 
