@@ -71,27 +71,15 @@ function draw() {
   rect(0, 0, windowWidth, windowHeight);
   pop();
 
-
   for (var t = 0; t < bubbles.length; t++) {
     bubbles[t].move();
     bubbles[t].display();
   }
-//cracks generator
-  for (let i = 0; i < cracks.length; i++) {
-        cracks[i].draw();
-    if (cracks[i].getRainbow()) {
-      cracks[i].setColor(getRandomColor());
 
-    }
   }
-//players
-  for (let i = 0; i < players.length; i++) {
-    players[i].draw();
-  }
-//score
-  fill("#ffffff");
-  text("Score: " + points, windowWidth - 150, windowHeight - 50);
-}
+
+
+
 
 function setGradient(c1, c2) {
   noFill();
@@ -129,9 +117,6 @@ function fishs(_img, _imgRev, _x, _dir, _duration, _yAmplit) {
   }
 }
 
-function updateScore(score) {
-  points = score;
-}
 
 
 function getRandomColor() {
@@ -143,54 +128,7 @@ function setColorOptions(colorOptions) {
   colorArray = colorOptions;
 }
 
-//display players
-function mouseMoved() {
-  var mouseData = {
-    xPos: mouseX,
-    yPos: mouseY
-  }
-  socket.emit("mousePosition", mouseData);
-}
 
-
-function mouseReleased() {
-  for (let i = 0; i < players.length; i++) {
-    if (players[i].getId() == socket.id) {
-      let localPlayer = socket.id
-      for (let j = 0; j < cracks.length; j++) {
-        if (cracks[j].clicked()) {
-          let xPos = cracks[j].x;
-          let yPos = cracks[j].y;
-          if (cracks[j].getRainbow()) {
-            if (allIntersect(cracks[j])) {
-              socket.emit("clickCrack", xPos, yPos, true);
-              socket.emit("changePlayerColor", localPlayer);
-            }
-          } else if (cracks[j].getColor() == players[i].getColor()) {
-            socket.emit("clickCrack", xPos, yPos, false);
-            socket.emit("changePlayerColor", localPlayer);
-          }
-        }
-      }
-    }
-  }
-}
-//for the rainbow crack
-function allIntersect(crack) {
-  let playersIntersect = 0;
-  for (let k = 0; k < players.length; k++) {
-    if (players[k].x > crack.x && players[k].x < crack.x + crack.width && players[k].y > crack.y && players[k].y < crack.y + crack.height) {
-      playersIntersect++;
-    }
-
-
-  }
-  if (playersIntersect == players.length) {
-    return true;
-  } else {
-    return false;
-  }
-}
 
 function Bubble() {
   this.x = random(0, windowWidth);
@@ -217,69 +155,6 @@ function Bubble() {
     noStroke();
     ellipse(this.x, this.y, this.size)
   }
-}
-
-
-function updateCrack(serverCracks) {
-  for (let i = 0; i < serverCracks.length; i++) {
-    let crackFromServer = serverCracks[i];
-    if (!crackExists(crackFromServer)) {
-      cracks.push(new Crack(crackFromServer));
-    }
-  }
-}
-
-
-function crackExists(crackFromServer) {
-  for (let i = 0; i < cracks.length; i++) {
-    if (cracks[i].x == crackFromServer.x && cracks[i].y == crackFromServer.y) {
-      return true;
-    }
-  }
-  return false;
-}
-
-
-function removeCrack(xPos, yPos) {
-  for (let i = 0; i < cracks.length; i++) {
-    if (cracks[i].x == xPos && cracks[i].y == yPos) {
-      cracks.splice(i, 1);
-    }
-  }
-}
-
-
-function updatePlayers(serverPlayers) {
-  for (let i = 0; i < serverPlayers.length; i++) {
-    let playerFromServer = serverPlayers[i];
-    if (!playerExists(playerFromServer)) {
-      players.push(new Player(playerFromServer));
-      console.log("Player ID: " + socket.id + " has joined the game.");
-    } else {
-      players[i].update(playerFromServer);
-    }
-  }
-}
-
-
-function playerExists(playerFromServer) {
-  for (let i = 0; i < players.length; i++) {
-    if (players[i].getId() == playerFromServer.id) {
-      return true;
-    }
-  }
-  return false;
-}
-
-
-function removePlayer(playerId) {
-  let remainingPlayers = [];
-  for (let i = 0; i < players.length; i++) {
-    if (players[i].getId() != playerId) {
-      remainingPlayers.push(players[i]);
-    }
-  }
-  players = remainingPlayers;
 }
 
 function windowResized() {
