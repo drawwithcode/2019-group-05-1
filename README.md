@@ -20,11 +20,53 @@ People are asked to work together and the experience demonstrates how each one o
 
 <h3> Design Challenges </h3>
 
-Recreating a marine ambient was 
+In order to recreate at best the ambient of an aquarium the game page is concentrated on the visual aspect. The interaction is the center of the design in which the player is fully immersed 
 
 <h3> Code Challenges </h3>
 
-Creating a crack that could only be solved using multiple cursors was one of the main challenges
+One of the hardest feature of the game was creating a rainbow crack that could only be repaired via multiple user interaction. The issue was resolved by the usage of intersection: 
+```
+function mouseReleased() {
+  for (let i = 0; i < players.length; i++) {
+    if (players[i].getId() == socket.id) {
+      let localPlayer = socket.id
+      for (let j = 0; j < cracks.length; j++) {
+        if (cracks[j].clicked()) {
+          let xPos = cracks[j].x;
+          let yPos = cracks[j].y;
+          if (cracks[j].getRainbow()) {
+            if (allIntersect(cracks[j])) {
+              socket.emit("clickCrack", xPos, yPos, true);
+              socket.emit("changePlayerColor", localPlayer);
+            }
+          } else if (cracks[j].getColor() == players[i].getColor()) {
+            socket.emit("clickCrack", xPos, yPos, false);
+            socket.emit("changePlayerColor", localPlayer);
+          }
+        }
+      }
+    }
+  }
+}
+//for the rainbow crack
+function allIntersect(crack) {
+  let playersIntersect = 0;
+  for (let k = 0; k < players.length; k++) {
+    if (players[k].x > crack.x && players[k].x < crack.x + crack.width && players[k].y > crack.y && players[k].y < crack.y + crack.height) {
+      playersIntersect++;
+    }
+
+
+  }
+  if (playersIntersect == players.length) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
+```
 
 <h3> Inspiration/References </h3>
 
