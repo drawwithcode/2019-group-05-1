@@ -7,6 +7,9 @@
 <br>Politecnico di Milano - Scuola del Design 
 <br>Faculty: Michele Mauri, Andrea Benedetti  </p> 
 
+![](ReadMe/landing.png)
+
+![](ReadMe/gamepage.png)
 
 <h3> Project Idea </h3> 
 
@@ -16,6 +19,8 @@ Pretending that we could see the ocean like an aquarium the users have to cover 
 People are asked to work together and the experience demonstrates how each one of us can contribute to a greater good. 
 
 <h3> Design Challenges </h3>
+
+Recreating a marine ambient was 
 
 <h3> Code Challenges </h3>
 
