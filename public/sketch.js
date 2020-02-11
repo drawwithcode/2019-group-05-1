@@ -167,10 +167,12 @@ function mouseMoved() {
 
 
 function mouseReleased() {
+  console.log("mouse is released");
   for (let i = 0; i < players.length; i++) {
     if (players[i].getId() == socket.id) {
       let localPlayer = socket.id
       for (let j = 0; j < cracks.length; j++) {
+        console.log("crack");
         if (cracks[j].clicked()) {
           let xPos = cracks[j].x;
           let yPos = cracks[j].y;
