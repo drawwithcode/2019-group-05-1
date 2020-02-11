@@ -96,8 +96,10 @@ function createCrack() {
 function removeCrack(xPos, yPos, rainbow) {
   if (rainbow) {
     highscore = highscore + 5;
+    console.log("rb score");
   } else {
   highscore++;
+  console.log("reg score");
 }
   console.log("Current Score: " + highscore)
   for (let i = 0; i < cracks.length; i++) {
