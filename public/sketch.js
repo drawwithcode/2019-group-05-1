@@ -123,7 +123,7 @@ function fishs(_img, _imgRev, _x, _dir, _duration, _yAmplit) {
   this.move = function() {
     if (frameCount % (_duration * 60) == 0) {
       // _dir = -_dir; //reverse
-      
+
     }
     _x = width / 2 * (cos(frameCount * width / (_duration * 60) / (200 * PI) + r * PI) + 1); //x position speed for moving
     y = sin(frameCount * PI / 150 + r) * _yAmplit + (r + 1) / 4 * height; //y position for moving
@@ -165,23 +165,20 @@ function mouseMoved() {
   socket.emit("mousePosition", mouseData);
 }
 
-
 function mouseReleased() {
-  console.log("mouse is released");
   for (let i = 0; i < players.length; i++) {
     if (players[i].getId() == socket.id) {
       let localPlayer = socket.id
       for (let j = 0; j < cracks.length; j++) {
-        console.log("crack");
         if (cracks[j].clicked()) {
           let xPos = cracks[j].x;
           let yPos = cracks[j].y;
-          if (cracks[j].getRainbow()) {
-            if (allIntersect(cracks[j])) {
-              socket.emit("clickCrack", xPos, yPos, true);
-              socket.emit("changePlayerColor", localPlayer);
-            }
-          } else if (cracks[j].getColor() == players[i].getColor()) {
+        if (cracks[j].getRainbow()){
+          if (allIntersect(cracks[j])){
+            socket.emit("clickCrack", xPos, yPos, true);
+            socket.emit("changePlayerColor", localPlayer);
+          }
+        } else if (cracks[j].getColor() == players[i].getColor()) {
             socket.emit("clickCrack", xPos, yPos, false);
             socket.emit("changePlayerColor", localPlayer);
           }
