@@ -20,11 +20,13 @@ People are asked to work together and the experience demonstrates how each one o
 
 <h3> Design Challenges </h3>
 
-In order to recreate at best the ambient of an aquarium the game page is concentrated on the visual aspect. The interaction is the center of the design in which the player is fully immersed 
+In order to give the user a full interactive experience it was needed to keep the game space free from textual instruction. This was solved thanks to a landing page that gives all the practical informations. For the main page through illustration it was recreated the ambient of an aquarium. The use of different colors is important as it identifies the different players, and is also an important part for the interaction: each player needs to match the bandaid to the crack with the same color. Textual parts are reduced to the minimum with a moving banner on the top and a score keeper in the right corner that blends with the background. 
 
 <h3> Code Challenges </h3>
 
-One of the hardest feature of the game was creating a rainbow crack that could only be repaired via multiple user interaction. The issue was resolved by the usage of intersection: 
+Matching the random color generated for the bandaid with the random color of the cracks was the first challenge that we faced. 
+
+But the hardest feature of the game was creating a rainbow crack that could only be repaired via multiple user interaction. The issue was resolved by the usage of intersection: 
 ```
 function mouseReleased() {
   for (let i = 0; i < players.length; i++) {
@@ -67,9 +69,6 @@ function allIntersect(crack) {
 
 
 ```
-
-<h3> Inspiration/References </h3>
-
 <h3> Credits </h3>
 
 To create a multiplayer experience we used as base:<br>
