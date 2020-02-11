@@ -25,6 +25,7 @@ In order to give the user a full interactive experience it was needed to keep th
 <h3> Code Challenges </h3>
 
 Matching the random color generated for the bandaid with the random color of the cracks was the first challenge that we faced. 
+It was solved through the usage of the different blocks that compose the code. 
 
 But the hardest feature of the game was creating a rainbow crack that could only be repaired via multiple user interaction. The issue was resolved by the usage of intersection: 
 ```
