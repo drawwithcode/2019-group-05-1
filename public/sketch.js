@@ -123,7 +123,7 @@ function fishs(_img, _imgRev, _x, _dir, _duration, _yAmplit) {
   this.move = function() {
     if (frameCount % (_duration * 60) == 0) {
       // _dir = -_dir; //reverse
-      console.log("rev");
+      
     }
     _x = width / 2 * (cos(frameCount * width / (_duration * 60) / (200 * PI) + r * PI) + 1); //x position speed for moving
     y = sin(frameCount * PI / 150 + r) * _yAmplit + (r + 1) / 4 * height; //y position for moving
@@ -132,7 +132,7 @@ function fishs(_img, _imgRev, _x, _dir, _duration, _yAmplit) {
 
     x = _x;
     deltax = x - px;
-    
+
     if (deltax >= 0) {
       image(_img, _x, y); //normal direction for moving
     } else {
