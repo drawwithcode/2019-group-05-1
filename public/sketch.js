@@ -132,7 +132,7 @@ function fishs(_img, _imgRev, _x, _dir, _duration, _yAmplit) {
 
     x = _x;
     deltax = x - px;
-    console.log(deltax);
+    
     if (deltax >= 0) {
       image(_img, _x, y); //normal direction for moving
     } else {
